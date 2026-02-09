@@ -59,7 +59,7 @@ export const analyzeRecitation = async (input: { text?: string, audioBase64?: st
         };
     }
     
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY, apiVersion: 'v1' });
 
     // Fixed: Using plain object for responseSchema as per guidelines
     const schema = {
@@ -132,9 +132,9 @@ export const analyzeRecitation = async (input: { text?: string, audioBase64?: st
             parts.push({ text: `Analyze this written Quranic text: "${input.text}". ${contextPrompt} Provide detailed metrics and check for spelling/memorization errors.` });
         }
 
-        // Fixed: Using gemini-3-pro-preview for complex recitation analysis task
+        // Fixed: Using gemini-1.5-pro for complex recitation analysis task
         const response = await ai.models.generateContent({
-            model: 'gemini-3-pro-preview',
+            model: 'gemini-1.5-pro',
             contents: { parts },
             config: {
                 responseMimeType: "application/json",
@@ -170,7 +170,7 @@ export const checkRecitationGaps = async (audioBase64: string, maskedVerseText: 
         };
     }
 
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY, apiVersion: 'v1' });
     
     // Fixed: Using plain object for responseSchema as per guidelines
     const schema = {
@@ -216,9 +216,9 @@ export const checkRecitationGaps = async (audioBase64: string, maskedVerseText: 
              ` }
         ];
 
-        // Fixed: Using gemini-3-pro-preview for complex gap analysis
+        // Fixed: Using gemini-1.5-flash for complex gap analysis
         const response = await ai.models.generateContent({
-            model: 'gemini-3-pro-preview',
+            model: 'gemini-1.5-flash',
             contents: { parts },
             config: {
                 responseMimeType: "application/json",
@@ -246,7 +246,7 @@ export const generateLevel = async (
     return new Promise(resolve => setTimeout(() => resolve(FALLBACK_LEVEL), 1000));
   }
 
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY, apiVersion: 'v1' });
   const batchSize = (mode === 'SURF' || mode === 'STACK' || mode === 'SURVIVOR') ? 8 : (mode === 'LEARN' || mode === 'QUIZ' ? 5 : 3); 
 
   try {
@@ -506,9 +506,9 @@ export const generateLevel = async (
             };
         }
 
-        // Fixed: Using gemini-3-pro-preview for complex level generation task
+        // Fixed: Using gemini-1.5-pro for complex level generation task
         const response = await ai.models.generateContent({
-            model: 'gemini-3-pro-preview',
+            model: 'gemini-1.5-pro',
             contents: prompt,
             config: {
               responseMimeType: "application/json",

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:exposed": "export __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=.com && vite",
     "build": "vite build",
     "preview": "vite preview"
   },
